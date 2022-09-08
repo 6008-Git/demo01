@@ -6,5 +6,11 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="awesome" level="application" />
+    <orderEntry type="library" name="jquery.ztree.core" level="application" />
+    <orderEntry type="library" name="jquery.ztree.all" level="application" />
+    <orderEntry type="library" name="jquery.ztree.exedit" level="application" />
+    <orderEntry type="library" name="jquery.ztree.exhide" level="application" />
+    <orderEntry type="library" name="jquery.ztree.excheck" level="application" />
   </component>
 </module>
