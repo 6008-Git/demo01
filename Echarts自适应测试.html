@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en" style="width: 100%;height: 100%;">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+    <style>
+        body{
+            width:100%;
+            height:100%;
+            margin: 0;
+        }
+        .background_big{
+            width:inherit;
+            height: inherit;
+            /* 	background: url("../../img/index/bg.jpg") no-repeat; */
+            background: url("bgBig.jpg") no-repeat;
+            background-size:100% 100%;
+        }
+        .body-main{
+            width: 100%;
+            height: 90%;
+            position:absolute;
+            top:9%;
+        }
+        #left_bottom{
+            position: absolute;
+            width: 25.4%;
+            height: 42%;
+            top: 55.4%;
+            left: 3.2%;
+            background: url(img.png) no-repeat;
+            background-size:100% 100%;
+            overflow: hidden;
+        }
+        #left-buttom-con{
+            margin-left: 10%;
+            margin-top: 10%;
+            height: 85%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="background_big">
+    <div class="body-title-date">
+        <h1 id="current_date" class="srm-area-time"><span class="time-class1"></span>&nbsp;&nbsp;&nbsp;<span class="time-class1"></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="time-class2"></span></h1>
+    </div>
+    <div class="body-main">
+        <div id="left_top">
+            <!--月度异常分析  -->
+            <div class="month-ab-analy">
+                <div id="month_ab_analy"></div>
+            </div>
+        </div>
+        <div id="left_bottom">
+            <div id="left-buttom-con"></div>
+        </div>
+        <!-- 数据中心 -->
+        <div id="center_top"></div>
+        <!--今日异常事件分析  -->
+        <div id="center_bottom">
+            <div class="today-ab-analy">
+                <div id="today_ab_analy"></div>
+            </div>
+        </div>
+        <!--mod by lk 2022/08/25-->
+        <div id="right">
+            <div id="right_list_con">
+                <!-- <button onclick="addNew()">点击新增数据</button> -->
+                <ul id="right_list">
+                    <!--下方自动生成-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+/*    //获取上层容器宽高
+    function getStyle(el, name) {
+        if (window.getComputedStyle) {
+            return window.getComputedStyle(el, null);
+        } else {
+            return el.currentStyle;
+        }
+    }
+    //给echarts的宽高赋值
+    //参数container为图表盒子节点.charts为图表节点
+
+    function chartssize (container,charts) {
+        function getStyle(el, name) {
+            if (window.getComputedStyle) {
+                return window.getComputedStyle(el, null);
+            } else {
+                return el.currentStyle;
+            }
+        }
+        var wi = getStyle(container, 'width').width;
+        var hi = getStyle(container, 'height').height;
+        charts.style.width = wi
+        charts.style.height = hi
+    }
+    //监控浏览器窗口变化
+    window.onresize=function(){
+        chartssize(chartBox,myChartsize)
+    }*/
+
+    $(function(){
+        createEventRankingEcharts("left-buttom-con",chartData)
+    });
+    let chartData = [
+        {
+            "name": "开关门监测",
+            "value": 1111111111425
+        },
+        {
+            "name": "事件升级处理机制",
+            "value": 415
+        },
+        {
+            "name": "厅内客流信息监测",
+            "value": 8
+        },
+        {
+            "name": "业务办理限时监测",
+            "value": 0
+        },
+        {
+            "name": "突发事件监测",
+            "value": 0
+        },
+        {
+            "name": "客户状态采集",
+            "value": 0
+        },
+        {
+            "name": "客户行为监测",
+            "value": 0
+        },
+        {
+            "name": "员工行为监测",
+            "value": 0
+        }
+    ];
+    //echarts图
+    function createEventRankingEcharts(id,data){
+        document.getElementById(id).removeAttribute("_echarts_instance_");
+        // eventRankingDom = document.getElementById('left-buttom-con');
+        var eventRankingChart = echarts.init(document.getElementById(id));
+        var eventRankingoption;
+        let chartData = data;
+        // 名称
+        let nameArray = [];
+        // 数量
+        let realNumArray = [];
+        // 最大数量填充背景
+        let maxData=0;
+        let defaultData=[];
+
+        // 遍历name与value
+        chartData.forEach((ele) => {
+            realNumArray.push(ele.value);
+            nameArray.push(ele.name);
+        });
+        /*求value的总和*/
+        var totalSum=0;
+        for (let i = 0; i < realNumArray.length; i++) {
+            totalSum = totalSum+realNumArray[i];
+        }
+        /*以总和填充背景，将defaultData的值全部变为总和*/
+        for (let i = 0; i < realNumArray.length; i++) {
+            defaultData[i] = (totalSum);
+        }
+
+        eventRankingoption = {
+            // backgroundColor: '#000',
+            legend:{
+                show:false,
+            },
+            tooltip:{
+                show:true,
+            },
+            grid: {
+                top: '4%',
+                bottom: 0,
+                height: '97%',
+                left: '5%',
+                right: '15%',
+                // containLabel:true,
+            },
+            xAxis: {
+                show: false,
+                type: 'value',
+            },
+            yAxis: [
+                // 左侧y轴
+                {
+                    type: 'category',
+                    data: nameArray,
+                    lineHeight: 16,
+                    show: true,
+                    inverse: true,
+                    axisLabel: {
+                        show: false,
+                        textStyle: {
+                            color: '#fff',
+                        },
+                    },
+                    splitLine: {
+                        show: false,
+                    },
+                    axisTick: {
+                        show: false,
+                    },
+                    axisLine: {
+                        show: false,
+                    },
+
+                },
+                // 右侧y轴
+                {
+                    type: 'category',
+                    inverse: true,
+                    axisTick: 'none',
+                    axisLine: 'none',
+                    show: true,
+                    axisLabel: {
+                        textStyle: {
+                            color: '#ffffff',
+                            //件字
+                            fontSize: '75%',
+                        },
+                        align: 'right',
+                        padding: [0, 15, 0, 0],
+                        verticalAlign: 'bottom',
+                        lineHeight: 29,
+                        formatter: function (value, index) {
+                            return `{a|${value}}件`;
+                        },
+                        rich: {
+                            a: {
+                                color: '#18d5d9',
+                                fontSize: '120%',
+                                fontFamily: 'PingFangSC-Regular',
+                                padding: [0, 5, 7, 0],
+                            },
+                        },
+                    },
+                    data: realNumArray,
+                },
+            ],
+            series: [
+                {
+                    name: '数值',
+                    type: 'bar',
+                    zlevel: 1,
+                    // realtimeSort:true,
+                    itemStyle: {
+                        normal: {
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                {
+                                    offset: 0,
+                                    color: '#026fe6',
+                                },
+                                {
+                                    offset: 0.5,
+                                    color: '#036594',
+                                },
+                                {
+                                    offset: 1,
+                                    color: '#04bfc8',
+                                },
+                            ]),
+                        },
+                        emphasis:{
+                            color: new echarts.graphic.LinearGradient(0, 0, 1, 0, [
+                                {
+                                    offset: 0,
+                                    color: '#fe9c3b',
+                                },
+                                {
+                                    offset: 0.5,
+                                    color: '#fdac50',
+                                },
+                                {
+                                    offset: 1,
+                                    color: '#fdbc62',
+                                },
+                            ]),
+                        }
+                    },
+                    barWidth: 10,
+                    data: chartData,
+
+                    label: {
+                        normal: {
+                            color: '#fff',
+                            show: true,
+                            // bar的lable偏移至左上方
+                            position: [0, '-18px'],
+                            textStyle: {
+                                fontSize: '15',
+                                fontFamily: 'SourceHanSansCN-Regular',
+                                color: '#fff',
+                            },
+                            formatter: function (value) {
+                                return `{a|${value.name}}`;
+                            },
+                            rich: {
+                                a: {
+                                    fontSize: '14',
+                                    fontFamily: 'SourceHanSansCN-Regular',
+                                    color: '#fff',
+                                    padding: [0, 0, 4, 0],
+                                },
+                            },
+                        },
+                    },
+                },
+                // 背景条形图
+                {
+                    tooltip:{
+                        show:false,
+                    },
+                    name: '背景',
+                    type: 'bar',
+                    barWidth: 10,
+                    barGap: '-100%',
+                    //限制bar的最小长度
+                    //barMinHeight:'385',
+                    data: defaultData,
+                    itemStyle: {
+                        normal: {
+                            color: '#223a5e',
+                            barBorderWidth: 1, // 边框宽度
+                        },
+                    },
+                },
+            ],
+        };
+
+        eventRankingoption && eventRankingChart.setOption(eventRankingoption);
+
+    }
+</script>
+</body>
+</html>
