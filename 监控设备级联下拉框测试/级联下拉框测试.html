@@ -32,19 +32,11 @@
 </div>
 <script type="text/javascript">
     $(function (){
+        //开始就查询第一下拉框的数据
         getDropDownCallback();
         //getDropDownDeviceCallback();
     })
-    //点击之后抛出的单位或者营业厅编号，用于查询对应设备信息(设备表里有所属单位和所属营业厅)
     var orgNo='';
-    //模拟根据单位编号查出的数据,默认是大溪沟(默认显示账号所能管理的全部设备，一启动就查出来赋值)
-    var device_data=[
-        // {
-        //     "id": 504020401,
-        //     "name": "大溪沟的设备",
-        //     "pid": 50402
-        // }
-    ];
     function getDropDownCallback(xmlRequest){
         /*var data = eval("(" + xmlRequest.responseText + ")");*/
         var data = [
@@ -128,6 +120,11 @@
                 "name": "巴川营业厅的子级", //子级名称
                 "pid": 504320101         //父级编码
             },
+            {
+                "id": 50402040101,
+                "name": "摄像头1",
+                "pid": 504020401
+            },
             //假设监控的父子级信息
             // {
             //     /*
@@ -135,7 +132,6 @@
             //      */
             // }
         ];
-
         data.forEach((e, ind) => {
             e.pId=e.pid;
         });
@@ -145,6 +141,7 @@
                 data: zNodes,
                 closeOnSelect: true,
                 showSearch: false,
+                selectLevel: -1, //没有子节点的节点的才能选择
                 /* 	initValue: 504020401,//设置初始值 */
                 key: {
                     rootPId: zNodes[0].pId,
@@ -152,18 +149,65 @@
                 onReady:function(e,data){
                     orgNo=$(this).val();
                     //模拟查询设备请求
-                    getDevice();
+                    /*getDevice();*/
+                    console.log(orgNo)
+
+
                 }
             }).on("change", function(e, data) {
                 //获取当前元素节点的value值
                 orgNo=$(this).val();
-                getDevice();
+               /* getDevice();*/
+                console.log(orgNo)
+
             });
         }
     }
     function getDropDownDeviceCallback(xmlRequest){
         /*var data = eval("(" + xmlRequest.responseText + ")");*/
-        var data = device_data;
+        //mo
+        var data = [
+            {
+                "id": 504020401,
+                "name": "大溪沟营业厅",
+                "pid": 50402
+            },
+            {
+                "id": 504020501,
+                "name": "沙坪坝营业厅",
+                "pid": 50402
+            },
+            {
+                "id": 504040404,
+                "name": "鱼洞营业厅",
+                "pid": 50404
+            },
+            {
+                "id": 504040507,
+                "name": "南坪营业厅",
+                "pid": 50404
+            },
+            {
+                "id": 504090101,
+                "name": "新牌坊营业厅",
+                "pid": 50409
+            },
+            {
+                "id": 504100001,
+                "name": "一横街营业厅",
+                "pid": 50410
+            },
+            {
+                "id": 504110101,
+                "name": "壁城营业厅",
+                "pid": 50411
+            },
+            {
+                "id": 504320101,
+                "name": "巴川营业厅",
+                "pid": 50432
+            }
+        ];
         data.forEach((e, ind) => {
             e.pId=e.pid;
         });
@@ -187,76 +231,12 @@
                 orgNo=$(this).val();
                 console.log(orgNo)
                 //initData();
-                //openVdo();
+                openVdo();
             });
         }
     }
 
     function getDevice(){
-        //初始，或者上层下拉框点击完之后执行
-
-        //根据单位或者营业厅查询设备，并返回数据，显示
-        //模拟根据单位编号查询设备信息
-        //每次下拉框渲染前清零
-        debugger;
-        switch (orgNo) {
-            case "50402":
-                device = [
-                    //设备所属营业厅编号，一个设备只能存在于一个营业厅内，而一个营业厅可以有多个设备   n:1的关系
-                    {
-                        "id": 504020401,
-                        "name": "大溪沟一级的设备",
-                        "pid": 50402
-                    },
-                    {
-                        "id": 504020501,
-                        "name": "沙洲坝的设备",
-                        "pid": 50402
-                    },
-                    {
-                        "id": 504020501,
-                        "name": "沙洲坝的设备2",
-                        "pid": 50402
-                    }
-                ];
-                device_data.splice(0,device_data.length);
-                device.forEach((item)=>{
-                    device_data.push(item)
-                })
-
-                break;
-            case "504020401":
-                //直接赋值的问题？？？
-                device=
-                    {
-                        "id": 504020401,
-                        "name": "大的设备",
-                        "pid": 50402
-                    }
-                debugger
-                device_data.splice(0,device_data.length);
-                device_data.push(device)
-                break;
-            case "504020501":
-                //直接赋值的问题？？？
-                device=[
-                    {
-                        "id": 504020401,
-                        "name": "小的设备",
-                        "pid": 50402
-                    },
-                    {
-                        "id": 504020401,
-                        "name": "小的设备",
-                        "pid": 50402
-                    }]
-                debugger
-                device_data.length=0;
-                device.forEach((item)=>{
-                    device_data.push(item)
-                })
-                break;
-        }
         getDropDownDeviceCallback();
     }
     function openVdo(){
