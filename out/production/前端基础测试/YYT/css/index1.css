@@ -1,0 +1,256 @@
+body{
+    width:100%;
+    height:100%;
+    margin: 0;
+}
+.background_big{
+    width:inherit;
+    height: inherit;
+    background: url('../img/bg.png') no-repeat;
+    background-size:100% 100%;
+}
+.body-main{
+    width: 100%;
+    height: 90%;
+    position:absolute;
+    top:9%;
+    outline: 2px solid green;
+}
+#left_top{
+    position:absolute;
+    width: 25%;
+    height: 49%;
+    top:2.5%;
+    left:3.2%;
+    outline: 2px solid red;
+}
+/* add by lk    start*/
+#left_bottom{
+    position:absolute;
+    width: 25%;
+    height: 41%;
+    margin-top:28.5%;
+    left:3.2%;
+    /*background: url("../../img/index/eventRank.png") no-repeat;*/
+    outline: 2px solid red;
+    /* 防止子div的margin失效 */
+    overflow:hidden;
+}
+#left-buttom-con{
+    margin-left: 10%;
+    margin-top: 10%;
+    height: 85%;
+    width: 100%;
+}
+/* add by lk    end*/
+#center_top{
+
+}
+#center_bottom{
+
+}
+
+/*mod by lk 2022/08-25 start */
+/*右侧列*/
+/*动画*/
+/*@keyframes listScrolling {
+    0%{
+        -webkit-transform-style: preserve-3d;
+    }
+    100%{
+        !*视觉混淆，92%*!
+        transform: translate3d(0,-92%,0);
+        -webkit-transform-style: preserve-3d;
+        !*transform: translateY(-93%);*!
+    }
+}*/
+#right{
+    background: url("../img/right_img.png") no-repeat;
+    position:absolute;
+    width:25%;
+    height:95%;
+    outline: 2px solid red;
+    right:3%;
+    top:3%;
+    /*防止溢出*/
+    overflow: hidden;
+}
+/*限制动画溢出的外层框*/
+#right_list_con{
+    position: absolute;
+    width:90%;
+    height:93%;
+    outline: 2px solid #000000;
+    left:3%;
+    top:5.2%;
+    /*防止溢出*/
+    overflow: hidden;
+}
+#right_list{
+    position: absolute;
+    width:100%;
+    height:107%;
+/*    !*动画设置*!
+    animation-name: listScrolling;
+    animation-duration: 25s;
+    animation-iteration-count: infinite;
+    !*从头到位速度相同*!
+    animation-timing-function: linear;*/
+}
+/*鼠标悬浮停止动画*/
+#right_list:hover{
+    cursor: pointer;
+    animation-play-state: paused;
+}
+/*!*首行间隔*!*/
+/*.right_row_spacing_1{*/
+/*    margin-top:-16%;*/
+/*}*/
+/*!*其他行间隔--通用*!*/
+/*.right_row_spacing{*/
+/*    height: 9.2%;*/
+/*}*/
+/*红色行*/
+.right_row_red{
+    position:relative;
+    background: url("../img/right_img_red.png") no-repeat;
+    width:100%;
+    height:8.8%;
+    /*隐藏li的点*/
+    margin-left: -10%;
+    /*解决子div的margin失效问题*/
+    padding-top: 15px;
+    /*鼠标变手指*/
+    cursor:pointer;
+    margin-top: -10px;
+}
+/*橙色行*/
+.right_row_orange{
+    position:relative;
+    background: url("../img/right_img_orange.png") no-repeat;
+    width:100%;
+    height:8.8%;
+    /*隐藏li的点*/
+    margin-left: -10%;
+    /*解决子div的margin失效问题*/
+    padding-top: 15px;
+    /*鼠标变手指*/
+    cursor:pointer;
+    margin-top: -10px;
+}
+/*黄色行*/
+.right_row_yellow{
+    position:relative;
+    background: url("../img/right_img_yellow.png") no-repeat;
+    width:100%;
+    height:8.8%;
+    /*隐藏li的点*/
+    margin-left: -10%;
+    /*解决子div的margin失效问题*/
+    padding-top: 15px;
+    /*鼠标变手指*/
+    cursor:pointer;
+    margin-top: -10px;
+}
+
+/*行左上方文字--通用*/
+.right_col_leftTop{
+    margin-top: -1%;
+    margin-left:15%;
+    font-size: 15px;
+    font-weight: bold;
+    color: #ffffff;
+}
+/*行右上方文字--通用*/
+.right_col_rightTop{
+    margin-top: -5%;
+    margin-left:85%;
+    font-size: 13px;
+    color: #09E1F1;
+}
+/*行下方文字--通用*/
+.right_col_buttom{
+    margin-top: 1%;
+    margin-left:15%;
+    font-size: 10px;
+    color: #ffffff;
+}
+/*mod by lk 2022/08-25 end */
+
+
+.pic_content{
+    width: 100%;
+    height: 20%;
+    outline: 2px solid red;
+}
+#img1{
+    width: 100%;
+    height: 100%;
+}
+
+
+
+.warn-alert{
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    z-index:2;
+    left:0;
+    top:0;
+
+}
+.warn-alert-mask{
+    width: 100%;
+    height: 100%;
+    background: url(../img/setUpMasking.png) no-repeat center;
+    background-size:100% 100%;
+}
+.warn-alert-content{
+    width: 70%;
+    height: 70%;
+    position:relative;
+    margin:auto;
+    top:15%;
+    background: url(../img/setUpBg.png) no-repeat center;
+    background-size:100% 100%;
+}
+.warn-img{
+    width: 50%;
+    height: 90%;
+    margin-left:10%;
+    margin-top:2.5%;
+    float:left;
+}
+.warn-des{
+    width: 30%;
+    height: 90%;
+    margin-left:2%;
+    margin-top:2.5%;
+    float:left;
+}
+.warn-des-title{
+    color:#01d6f8;
+    text-align: center;
+    font-size: 22px;
+}
+.warn-des-li{
+    width:100%;
+    height:5%;
+    padding-top: 2%
+}
+.warn-des-li-title{
+    color:#c7bc13;
+    font-size: 18px;
+    margin: 2% 2%;
+    font-weight: 600;
+}
+.warn-des-li-content{
+    width:inherit;
+    height:100%;
+    color:#b7b8ba;
+    font-size: 18px;
+    word-wrap: break-word;
+    word-break: break-all;
+
+
+}

@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="css/index1.css">
+</head>
+<body>
+<div class="background_big">
+    <!--<img src="img/bg.png" alt="加载失败">-->
+
+    <div class="body-main">
+        <div id="left_top"></div>
+        <div id="left_bottom">
+            <div id="left-buttom-con"></div>
+        </div>
+        <div id="center_top">
+        </div>
+        <div id="center_bottom"></div>
+
+        <!--mod by lk 2022/08/25-->
+        <div id="right">
+            <div id="right_list_con">
+                <!--点击新增01数据，不是1类型不加-->
+                <button onclick="addNew(oneDataDB)">点击新增01数据</button>
+                <button onclick="addNew(oneDataDB1)">点击新增02数据</button>
+                <button onclick="formatData()">点击清除数据</button>
+                <ul id="right_list">
+                    <!--首行与上方间隔-->
+                    <!--<li class="right_row_spacing_1"></li>-->
+                    <!--下方自动生成-->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<!--弹窗-->
+<div class="warn-alert" id="warn_alert" onclick="showNone()">
+    <div class="warn-alert-mask">
+        <div class="warn-alert-content">
+            <img class="warn-img" id="warnEvent" src="">
+            <div class="warn-des">
+                <h1 class="warn-des-title" >告警详情</h1>
+                <div class="warn-des-li"><span class="warn-des-li-title">告警事件类型：</span><span id="alarm_type" class="warn-des-li-content">111</span></div>
+                <div class="warn-des-li"><span class="warn-des-li-title">告警事件：</span><span id="alarm_time" class="warn-des-li-content">111</span></div>
+                <div class="warn-des-li"><span class="warn-des-li-title">地区：</span><span id="alarm_org" class="warn-des-li-content">111</span></div>
+                <div class="warn-des-li"><span class="warn-des-li-title">营业厅：</span><span id="alarm_hall" class="warn-des-li-content">111</span></div>
+                <!--<div class="warn-des-li"><span class="warn-des-li-title">图片地址：</span><span id="alarm_pic" class="warn-des-li-content">111</span></div>
+                <div class="warn-des-li"><span class="warn-des-li-title">视频地址：</span><span id="alarm_vdo" class="warn-des-li-content">111</span></div>-->
+                <div class="warn-des-li"><span class="warn-des-li-title">告警具体信息：</span><span id="alarm_msg" class="warn-des-li-content">111</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="js/index.js"></script>
+<script>
+    function showNone(){
+        $("#warn_alert").css('display','none');
+    }
+
+    //动画+实际新增
+    function addAnimate(data) {
+        //新增前高度清0
+        height=0;
+        $(this).css({
+            marginTop: "0px",
+        })
+        // let newli = document.createElement("li");
+        // newli.innerText="新增位置";
+        //在第一个节点前加节点----新添动画
+        $("#right_list_con").find('ul').animate({
+            marginTop: "18.8%",
+        },500,function () {
+            //动画完了之后，执行单条新增
+            debugger;
+            getOneEvent(data);
+            $(this).css({
+                marginTop: "0px",
+            })
+        });
+    }
+    //每次移动的高度
+    var height=45;
+    let ul = document.getElementById("right_list")
+    /*新增前的判断（属于哪一个大类）
+        data:新增的单条数据
+        mod by lk 2022/09/02
+        ps:添加新增时的条件      1、根据大类判断是否新增动画
+                              2、根据营业厅判断是否新增动画
+        */
+    var qunaju = "";
+    var orgNo="50402";
+    function addNew(data){
+        //1、先获得下拉框点击编号    orgNo
+        //2、与websocket的"org_no"做判断
+        //市级 或者 县级
+        if (data.org_no.slice(0,5)===orgNo || data.org_no===orgNo){
+            //因为推的数据没有大类信息，故作映射
+            if(parentToChil[data.alarm_type]===qunaju){
+                addAnimate(data);
+            }else if (qunaju===''){
+                addAnimate(data);
+            }
+        }else if(orgNo===''){
+            addAnimate(data)
+        }
+
+
+
+        //依据单条中的大类类型，进行动画新增
+        debugger;
+        //因为推的数据没有大类信息，故作映射
+        // if(parentToChil[data.alarm_type]===qunaju){
+        //     addAnimate(data);
+        // }else if (qunaju===''){
+        //     addAnimate(data);
+        // }
+        //条件达成滚动
+        //startScroll();
+    }
+   /* //	停顿滚动--循环
+    function timer(opj) {
+        //ul.childElementCount要重新获取，存在变量里不行
+        //获取总的li数量，用作是否滚动判断
+        debugger;
+        if (ul.childElementCount>6){
+            $(opj).find('ul').animate({
+                //动画上或者下移heightx
+                /!*marginTop: "-6%"*!/
+                //持续下滑，直到height归零
+                //marginTop: height+"px"
+                //循环下滑，每次一个
+                marginTop: "20.8%"
+            }, 1000, function() {
+                /!*!// //循环用
+                // //把底部溢出的数据放到上边
+                 $(this).css({
+                     //上移的位置归零
+                     marginTop: "0px"
+                 });
+                //把最后一个放到最前面---无法确保两次新来的相邻
+                let lilast = ul.lastElementChild;
+                ul.insertBefore(lilast,ul.firstElementChild);
+                //或者把新来的直接放在上次新来的前边，然后整体刷新，那也不是按照时间排名
+                //只要循环就不可能按照时间排名*!/
+            })
+        }
+    }
+    function startScroll() {
+        var mit = setInterval(function () {
+            timer("#right_list_con");
+            height=height+45;
+            if(height>225){
+                //超过总列表高度，立马归零
+                height=0;
+            }
+        }, 2500); //中奖名单-停顿滚动
+    }*/
+
+</script>
+</body>
+</html>

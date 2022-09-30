@@ -1,0 +1,174 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>jQuery新闻列表滚动(上下滚动、横向滚动、无缝滚动、停顿滚动)</title>
+    <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+    <style>
+        body {
+            max-width:768px;
+            min-width:320px;
+            font-family:'微软雅黑',"宋体";
+            min-height:100%;
+            position:relative;
+            margin:auto;
+            background:#e9e9e9;
+            width:100%;
+        }
+        ::-webkit-scrollbar {
+            width:0px
+        }
+        a:link,a:visited,a:hover,a:active {
+            text-decoration:none;
+            -webkit-tap-highlight-color:transparent;
+        }
+        ul,li,dl,dd,h1,h2,h3,h4,h5,h6,p,input {
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        .panel {
+            width:100%;
+            text-align:center;
+            background:#000;
+            margin-top:30px;
+        }
+        .panel_zhong {
+            font-size:18px;
+            padding-left:20px;
+            height:34px;
+            line-height:34px;
+            color:#fff;
+        }
+
+        /*获奖名单-停顿滚动*/
+        .maquee {
+            width:100%;
+            height:230px;
+            overflow:hidden;
+            background:#fff;
+        }
+        .maquee ul {
+            width:100%;
+            height:230px;
+            color:#666;
+        }
+        .maquee li {
+            width:100%;
+            height:45px;
+            background:#fff;
+            line-height:45px;
+            text-align:center;
+            font-size:14px;
+            border-bottom:1px dashed #aaa;
+        }
+    </style>
+</head>
+<body>
+
+<div class="panel">
+    <p class="panel_zhong">中奖名单滚动 - 停顿滚动</p>
+
+    <div class="maquee" id="div">
+        <ul id="ulId">
+            <li>张三 获得了7折优惠券</li>
+            <li>李四 获得了8折优惠券</li>
+            <li>王五 获得了7折优惠券</li>
+            <li>赵六 获得了5折优惠券</li>
+            <li>鬼脚七 获得了4折优惠券</li>
+        </ul>
+    </div>
+
+    <button onclick="addNew()">点击新增一条数据</button>
+    <button onclick="formatData()">点击清除所有数据</button>
+</div>
+
+
+
+<script>
+    //每次移动的高度
+    var height=45;
+    let ul = document.getElementById("ulId")
+    //测试新增
+    function addNew(){
+        //新增前高度清0
+        height=0;
+        $(this).css({
+            marginTop: "0px",
+        })
+        let newli = document.createElement("li");
+        newli.innerText=dataDB[0].testValue;
+        //在第一个节点前加节点----新添动画
+        $(".maquee").find('ul').animate({
+            marginTop: "25px",
+        },1000,function () {
+            ul.insertBefore(newli,ul.firstElementChild)
+            $(this).css({
+                marginTop: "0px",
+            })
+        });
+        //ul.insertBefore(newli,ul.firstElementChild)
+        //满足条件即可滚动
+        startScroll();   //-----先注释掉不滚动
+
+
+        console.log(ul.firstElementChild)
+        console.log(ul.childElementCount)
+
+    }
+    var dataDB = [
+        {testValue:"add  1"},
+        {testValue:"add  2"},
+        {testValue:"add  3"}
+    ];
+
+
+    function formatData() {
+        //拿到ul标签
+        $("#ulId").find("li").remove();
+    }
+/*    //	停顿滚动
+    function timer(opj) {
+        //ul.childElementCount要重新获取，存在变量里不行
+        //获取总的li数量，用作是否滚动判断
+        if (ul.childElementCount>6){
+            $(opj).find('ul').animate({
+                //动画上或者下移heightx
+                /!*marginTop: "-6%"*!/
+                //持续下滑，直到height归零
+                //marginTop: height+"px"
+                //循环下滑，每次一个
+                marginTop: "25px"
+            }, 1500, function() {
+                //循环用
+
+                //把最后一个放到最前面---无法确保两次新来的相邻
+                let lilast = ul.lastElementChild;
+                ul.insertBefore(lilast,ul.firstElementChild);
+
+                //上移的位置归零
+                 $(this).css({
+                     marginTop: "0px"
+                 });
+
+                //或者把新来的直接放在上次新来的前边，然后整体刷新，那也不是按照时间排名
+                //只要循环就不可能按照时间排名
+            })
+        }
+    }
+    function startScroll() {
+        var mit = setInterval(function () {
+            timer(".maquee");
+            height=height+45;
+            if(height>225){
+                //超过总列表高度，立马归零
+                height=0;
+            }
+        }, 2500); //中奖名单-停顿滚动
+    }*/
+
+</script>
+
+
+</body>
+</html>

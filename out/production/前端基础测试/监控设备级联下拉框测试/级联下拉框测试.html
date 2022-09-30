@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <title>zTree测试</title>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <!--<link type="text/css" rel="stylesheet" href="css/index.css">-->
+    <!--引入zTree有关-->
+    <link type="text/css" href="css/jquery.select.zTree.v1.5.1.css" rel="stylesheet"/>
+    <link type="text/css" href="css/zTreeStyle.css" rel="stylesheet"/>
+    <script type="text/javascript" src="js/jquery.select.zTree.v1.5.1.min.js"></script>
+    <script type="text/javascript" src="js/jquery.ztree.core.js"></script>
+    <script type="text/javascript" src="js/jquery.ztree.exhide.js"></script>
+
+    <!--CDN  zTree-->
+    <style>
+        .body-title-pos{
+            position: absolute;
+            top: 1.2%;
+            left: 2.4%;
+            display: flex;
+            align-items:center;
+            width: 500px;
+        }
+    </style>
+</head>
+<body>
+<div class="body-title-pos">
+    <img  src="img/posImg.png"  class="pos-img" alt="加载失败">
+    <select id="select2" title="选择营业厅或单位" class="select_ztree_hidden"></select>
+    <select id="select_device" title="选择监控设备" class="select_ztree_hidden"></select>
+</div>
+<script type="text/javascript">
+    $(function (){
+        //开始就查询第一下拉框的数据
+        getDropDownCallback();
+        //getDropDownDeviceCallback();
+    })
+    var orgNo='';
+    function getDropDownCallback(xmlRequest){
+        /*var data = eval("(" + xmlRequest.responseText + ")");*/
+        var data = [
+            {
+                "id": 50101,
+                "name": "国网重庆市电力公司",
+                "pid": 0
+            },
+            {
+                "id": 50402,
+                "name": "市区供电分公司",
+                "pid": 50101
+            },
+            {
+                "id": 50404,
+                "name": "市南供电分公司",
+                "pid": 50101
+            },
+            {
+                "id": 50409,
+                "name": "市北供电分公司",
+                "pid": 50101
+            },
+            {
+                "id": 50410,
+                "name": "万州供电分公司",
+                "pid": 50101
+            },
+            {
+                "id": 50411,
+                "name": "璧山供电分公司",
+                "pid": 50101
+            },
+            {
+                "id": 50432,
+                "name": "铜梁供电分公司",
+                "pid": 50101
+            },
+            {
+                "id": 504020401,
+                "name": "大溪沟营业厅",
+                "pid": 50402
+            },
+            {
+                "id": 504020501,
+                "name": "沙坪坝营业厅",
+                "pid": 50402
+            },
+            {
+                "id": 504040404,
+                "name": "鱼洞营业厅",
+                "pid": 50404
+            },
+            {
+                "id": 504040507,
+                "name": "南坪营业厅",
+                "pid": 50404
+            },
+            {
+                "id": 504090101,
+                "name": "新牌坊营业厅",
+                "pid": 50409
+            },
+            {
+                "id": 504100001,
+                "name": "一横街营业厅",
+                "pid": 50410
+            },
+            {
+                "id": 504110101,
+                "name": "壁城营业厅",
+                "pid": 50411
+            },
+            {
+                "id": 504320101,
+                "name": "巴川营业厅",
+                "pid": 50432
+            },
+            {
+                "id": 5043201011,        //子级编码
+                "name": "巴川营业厅的子级", //子级名称
+                "pid": 504320101         //父级编码
+            },
+            {
+                "id": 50402040101,
+                "name": "摄像头1",
+                "pid": 504020401
+            },
+            //假设监控的父子级信息
+            // {
+            //     /*
+            //     理想情况：单位与营业厅
+            //      */
+            // }
+        ];
+        data.forEach((e, ind) => {
+            e.pId=e.pid;
+        });
+        var zNodes=data;
+        if(zNodes){
+            $("#select2").selectZTree({
+                data: zNodes,
+                closeOnSelect: true,
+                showSearch: false,
+                selectLevel: -1, //没有子节点的节点的才能选择
+                /* 	initValue: 504020401,//设置初始值 */
+                key: {
+                    rootPId: zNodes[0].pId,
+                },
+                onReady:function(e,data){
+                    orgNo=$(this).val();
+                    //模拟查询设备请求
+                    /*getDevice();*/
+                    console.log(orgNo)
+
+
+                }
+            }).on("change", function(e, data) {
+                //获取当前元素节点的value值
+                orgNo=$(this).val();
+               /* getDevice();*/
+                console.log(orgNo)
+
+            });
+        }
+    }
+    function getDropDownDeviceCallback(xmlRequest){
+        /*var data = eval("(" + xmlRequest.responseText + ")");*/
+        //mo
+        var data = [
+            {
+                "id": 504020401,
+                "name": "大溪沟营业厅",
+                "pid": 50402
+            },
+            {
+                "id": 504020501,
+                "name": "沙坪坝营业厅",
+                "pid": 50402
+            },
+            {
+                "id": 504040404,
+                "name": "鱼洞营业厅",
+                "pid": 50404
+            },
+            {
+                "id": 504040507,
+                "name": "南坪营业厅",
+                "pid": 50404
+            },
+            {
+                "id": 504090101,
+                "name": "新牌坊营业厅",
+                "pid": 50409
+            },
+            {
+                "id": 504100001,
+                "name": "一横街营业厅",
+                "pid": 50410
+            },
+            {
+                "id": 504110101,
+                "name": "壁城营业厅",
+                "pid": 50411
+            },
+            {
+                "id": 504320101,
+                "name": "巴川营业厅",
+                "pid": 50432
+            }
+        ];
+        data.forEach((e, ind) => {
+            e.pId=e.pid;
+        });
+        var zNodes=data;
+        if(zNodes){
+            $("#select_device").selectZTree({
+                data: zNodes,
+                closeOnSelect: true,
+                showSearch: false,
+                /* 	initValue: 504020401,//设置初始值 */
+                key: {
+                    rootPId: zNodes[0].pId,
+                },
+                onReady:function(e,data){
+                    orgNo=$(this).val();
+                    //initData();
+                    //openVdo();
+                }
+            }).on("change", function(e, data) {
+                //获取当前元素节点的value值
+                orgNo=$(this).val();
+                console.log(orgNo)
+                //initData();
+                openVdo();
+            });
+        }
+    }
+
+    function getDevice(){
+        getDropDownDeviceCallback();
+    }
+    function openVdo(){
+        alert("打开视频显示小框")
+    }
+</script>
+</body>
+</html>
+

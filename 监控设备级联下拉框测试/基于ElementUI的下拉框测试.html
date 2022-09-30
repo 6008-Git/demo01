@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="" xmlns="">
+<head>
+    <meta charset="UTF-8">
+    <!-- import CSS -->
+    <link rel="stylesheet" href="./_element-ui@2.15.10@element-ui/lib/theme-chalk/index.css">
+    <!-- import Vue before Element -->
+    <script src="./js/vue.min.js"></script>
+    <!-- import JavaScript -->
+    <script src="./_element-ui@2.15.10@element-ui/lib/index.js"></script>
+    <title>element测试</title>
+</head>
+<body>
+<div id="app">
+    <el-select v-model="value" placeholder="请选择">
+        <el-option
+                v-for="item in options"
+                :key="item.value"
+                :label="item.label"
+                :value="item.value">
+        </el-option>
+    </el-select>
+</div>
+</body>
+
+<script>
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                visible: false
+
+            }
+        }
+    })
+
+</script>
+</html>

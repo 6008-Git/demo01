@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="element-ui" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/监控设备级联下拉框测试/_element-ui@2.15.10@element-ui" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/监控设备级联下拉框测试/_element-ui@2.15.10@element-ui" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

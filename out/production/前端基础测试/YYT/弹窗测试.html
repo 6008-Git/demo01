@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <script src="http://libs.baidu.com/jquery/1.11.3/jquery.min.js"></script>
+  <link rel="stylesheet" href="css/index1.css">
+</head>
+<body>
+<div>
+  <button onclick="openDialog()">打开弹窗</button>
+</div>
+<div class="warn-alert" id="warn_alert" onclick="showNone()">
+  <div class="warn-alert-mask">
+    <div class="warn-alert-content">
+      <img class="warn-img" id="warnEvent" src="" alt="未加载">
+      <div class="warn-des">
+        <h1 class="warn-des-title" >告警详情</h1>
+        <div class="warn-des-li"><span class="warn-des-li-title">告警事件id：</span><span id="alarm_data_id" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">单位编号：</span><span id="org_no" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">日期：</span><span id="data_date" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">事件类型：</span><span id="alarm_type" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">营业员工号：</span><span id="emp_no" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">告警内容：</span><span id="alarm_content" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">审核状态：</span><span id="audit_status" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">审核人：</span><span id="audit_user" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">审核时间：</span><span id="audit_date" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">审核结果：</span><span id="audit_result" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">区域类型：</span><span id="area_type" class="warn-des-li-content">111</span></div>
+        <div class="warn-des-li"><span class="warn-des-li-title">用户编号：</span><span id="cons_no" class="warn-des-li-content">111</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  function openDialog(){
+    $("#warn_alert").css('display','inline');
+  }
+  //关闭弹窗
+  function showNone(){
+    $("#warn_alert").css('display','none');
+  }
+
+</script>
+</body>
+</html>
