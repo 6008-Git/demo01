@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>测试二次确认密码的校验提醒</title>
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+</head>
+<body>
+<label for="input1">输入密码</label><input id="input1" type="text" oninput="check1()"><br>
+<span id="txt1"></span><br>
+<label for="input2">确认密码</label><input id="input2" type="text" oninput="check2()">
+<span id="txt2"></span>
+
+<script type="text/javascript">
+ function check1() {
+     var input1 = $("#input1").val()
+     console.log(input1)
+     check2();
+ }
+
+ function check2() {
+     var input1 = $("#input1").val()
+     var input2 = $("#input2").val()
+     console.log(input2)
+     if(input1===input2){
+        document.getElementById("txt2").innerText="密码相同"
+     }else {
+        document.getElementById("txt2").innerText="密码不相同"
+     }
+ }
+</script>
+</body>
+</html>

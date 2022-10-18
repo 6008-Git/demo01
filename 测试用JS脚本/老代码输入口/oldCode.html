@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>一键代码转换</title>
+    <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="/测试用JS脚本/老代码输入口/oldFormTrans.js"></script>
+    <script type="text/javascript" src="/测试用JS脚本/老代码输入口/oldTbaleTrans.js"></script>
+    <style>
+        #left{
+            float: left;
+            width: 50%;
+            height: 800px;
+            /*background-color: gray;*/
+            margin-right: -100%;
+        }
+        #right{
+            float: right;
+            width: 50%;
+            height: 800px;
+            margin-left: -100%;
+            /*background-color: black;*/
+        }
+        #oldForm{
+
+        }
+        #oldTable{
+
+        }
+    </style>
+</head>
+<body>
+<div id="left">
+    <label>
+        <textarea id="oldForm" cols="120" rows="25" placeholder="请输入老表单代码"></textarea>
+        <textarea id="oldTable" cols="120" rows="25" placeholder="请输入老表格代码"></textarea>
+    </label>
+</div>
+
+
+<div id="right">
+    <label>
+        <textarea id="newForm" cols="125" rows="50" placeholder="请点击转换按钮进行转换"></textarea>
+    </label>
+    <button onclick="startFormTrans()">转换表单代码</button>
+    <button onclick="startTableTrans()">转换表格代码</button>
+    <button onclick="startExtractData()">提取data</button>
+    <button onclick="startExtractMethods()">提取methods</button>
+    <button onclick="resetTrans()">重置</button>
+</div>
+
+
+
+<script type="text/javascript">
+    //表单转换
+    function startFormTrans(){
+        //老表单
+        let oldFormVal = $("#oldForm").val();
+        //新表单
+        let newFormVal = oldFormTrans(oldFormVal);
+        //输出
+        $("#newForm").val(newFormVal);
+    }
+    //表格转换
+    function startTableTrans(){
+        //老表格
+        let oldTableVal = $("#oldTable").val();
+        //新表格
+        let newTableVal = oldTableTrans(oldTableVal);
+        //输出
+        $("#newForm").val(newTableVal);
+    }
+    //提取data
+    function startExtractData(){
+        //老表单
+        let oldFormVal = $("#oldForm").val();
+        //新data
+        let newData = oldFormDataExtract(oldFormVal);
+        $("#newForm").val(newData);
+    }
+    //提取Methods
+    function startExtractMethods(){
+        //新methods
+        let newMethods = oldFormMethodsExtract();
+        //输出
+        $("#newForm").val(newMethods);
+    }
+    //重置
+    function resetTrans(){
+        $("#oldForm").val('');
+        $("#oldTable").val('');
+        $("#newForm").val('');
+    }
+</script>
+</body>
+</html>
