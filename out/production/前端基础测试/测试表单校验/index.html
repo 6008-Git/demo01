@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>第一次输入密码的强弱判断</title>
     <script type="text/javascript" src="/js/jquery.min.js"></script>
     <style>
         #text{
@@ -11,7 +11,7 @@
     </style>
 </head>
 <body>
-<input id="input1" type="password" value="" oninput="checkModPassWord()">
+<label for="input1">输入密码</label><input id="input1" type="password" value="" oninput="checkModPassWord()">
 <span id="text"></span>
 
 <script type="text/javascript">
@@ -21,32 +21,33 @@
         //debugger
         if(pwd.length>=8){
             //只有数字 || 只有字母 ||只有数字和小写字母  ||只有数字和大写字母
-            if(((/^\d+$/.test(pwd)) || (/^[a-z]+$/i.test(pwd)) || (/[0-9a-z]+/.test(pwd)) ||(/[0-9A-Z]+/.test(pwd)))){
+            if(((/^\d+$/.test(pwd)) || (/^[a-z]+$/i.test(pwd)) || (/^[0-9a-z]+$/.test(pwd)) ||(/^[0-9A-Z]+$/.test(pwd)))){
                 console.log("弱"+":"+pwd)
                 document.getElementById("text").innerText="密码强度弱,请至少包含大小写字母与数字,且最低长度为8位";
                 $("#text").css({
                     "color":"red"
                 })
             }
-            //数字且小写且大写
-            if ((/\d/.test(pwd)) && (/[A-Z]/.test(pwd)) && (/[a-z]/.test(pwd))){
+            //数字且小写且大写且不含字符为中
+            if ((/\d/.test(pwd)) && (/[A-Z]/.test(pwd)) && (/[a-z]/.test(pwd)) && !(/\W|[_]/.test(pwd))){
                 console.log("中"+":"+pwd)
                 document.getElementById("text").innerText="密码强度中";
                 $("#text").css({
                     "color":"yellow"
                 })
             }
-            // //即有大写、小写、数字、字符为强
-            // if ((/\d/.test(pwd)) && (/[A-Z]/.test(pwd)) && (/[a-z]/.test(pwd)) && (/\W|[_]/.test(pwd))){
-            //     alert("强")
-            //     document.getElementById("text").innerText="密码强度高"
-            //     $("#text").css({
-            //         "color":"#4FFFAD"
-            //     })
-            // }
+            //即有大写、小写、数字、字符为强
+            if ((/\d/.test(pwd)) && (/[A-Z]/.test(pwd)) && (/[a-z]/.test(pwd)) && (/\W|[_]/.test(pwd))){
+                console.log("强"+":"+pwd)
+                document.getElementById("text").innerText="密码强度高"
+                $("#text").css({
+                    "color":"#4FFFAD"
+                })
+            }
         }
         else{
             document.getElementById("text").innerText="请至少包含大小写字母与数字,且最低长度为8位";
+            console.log("密码要高于8位"+":"+pwd)
             $("#text").css({
                 "color":"red"
             })
