@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>后端代码生成</title>
     <script type="text/javascript" src="jquery.min.js"></script>
+    <script type="text/javascript" src="downloadFile.js"></script>
 </head>
 <body>
 <label for="fileName"></label><input id="fileName" placeholder="请输入名称">
@@ -11,7 +12,8 @@
 <button onclick="createFile()">点击生成文件</button>
 <script type="text/javascript">
     function createFile(){
-
+        let fileName = $("#fileName").val()+'.java';
+        downloadFile(fileName,'测试内容')
     }
 </script>
 </body>
