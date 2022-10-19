@@ -5,15 +5,85 @@
     <title>后端代码生成</title>
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="downloadFile.js"></script>
+    <script type="text/javascript" src="backEndContent.js"></script>
+    <style>
+        #left{
+            float: left;
+            width: 50%;
+            height: 800px;
+            /*background-color: gray;*/
+            margin-right: -100%;
+        }
+        #right{
+            float: right;
+            width: 45%;
+            height: 800px;
+            margin-left: -100%;
+            /*background-color: black;*/
+        }
+        #center{
+            margin-left: 48%;
+            align-items: center;
+            width: 8%;
+            height: 800px;
+            /*background-color: gray;*/
+            margin-right: -100%;
+        }
+        input{
+            width: 400px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
-<label for="fileName"></label><input id="fileName" placeholder="请输入名称">
+
 <!--文件生成-->
-<button onclick="createFile()">点击生成文件</button>
+<div id="left">
+    <label for="fileName">文件名称</label><input id="fileName" placeholder="大写开头，并以驼峰命名"><br><br>
+    <label for="allControllerReflect">总映射路径名称</label><input id="allControllerReflect"><br><br>
+    <label for="searchControllerReflect">查询映射路径名称</label><input id="searchControllerReflect"><br><br>
+    <label for="AllcommentChinese">总中文注释</label><input id="AllcommentChinese"><br><br>
+    <label for="MethodscommentChinese">方法中文注释</label><input id="MethodscommentChinese"><br><br>
+    <button onclick="createFile()">点击生成文件</button>
+    <button onclick="createBackCode()">点击生成后端代码</button>
+</div>
+<div id="right">
+    <label>
+        <textarea id="newForm" cols="115" rows="50" placeholder="请点击转换按钮进行转换"></textarea>
+    </label>
+</div>
+
 <script type="text/javascript">
     function createFile(){
-        let fileName = $("#fileName").val()+'.java';
-        downloadFile(fileName,'测试内容')
+        let fileName = $("#fileName").val();
+        let allControllerReflect = $("#allControllerReflect").val();
+        let searchControllerReflect = $("#searchControllerReflect").val();
+        let AllcommentChinese = $("#AllcommentChinese").val();
+        let MethodscommentChinese = $("#MethodscommentChinese").val();
+        //生成controller
+        downloadFile(fileName+'Controller'+'.java',controllerContent(fileName,allControllerReflect,searchControllerReflect,
+            AllcommentChinese,MethodscommentChinese))
+        //生成service
+        downloadFile(fileName+'Sercice'+'.java',serviceContent(fileName,allControllerReflect,searchControllerReflect,
+            AllcommentChinese,MethodscommentChinese))
+        //生成impl
+        downloadFile(fileName+'SerciceImpl'+'.java',serviceImplContent(fileName,allControllerReflect,searchControllerReflect,
+            AllcommentChinese,MethodscommentChinese))
+    }
+    function createBackCode(){
+        let fileName = $("#fileName").val();
+        let allControllerReflect = $("#allControllerReflect").val();
+        let searchControllerReflect = $("#searchControllerReflect").val();
+        let AllcommentChinese = $("#AllcommentChinese").val();
+        let MethodscommentChinese = $("#MethodscommentChinese").val();
+        $('#newForm').val(
+            controllerContent(fileName,allControllerReflect,searchControllerReflect,
+            AllcommentChinese,MethodscommentChinese)+'\n'+
+            serviceContent(fileName,allControllerReflect,searchControllerReflect,
+                AllcommentChinese,MethodscommentChinese)+'\n'+
+            serviceImplContent(fileName,allControllerReflect,searchControllerReflect,
+                AllcommentChinese,MethodscommentChinese)+'\n'
+        )
     }
 </script>
 </body>
