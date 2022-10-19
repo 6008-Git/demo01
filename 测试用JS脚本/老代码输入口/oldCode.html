@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <title>一键代码转换</title>
     <script type="text/javascript" src="jquery.min.js"></script>
-    <script type="text/javascript" src="/测试用JS脚本/老代码输入口/oldFormTrans.js"></script>
-    <script type="text/javascript" src="/测试用JS脚本/老代码输入口/oldTbaleTrans.js"></script>
+    <script type="text/javascript" src="oldFormTrans.js"></script>
+    <script type="text/javascript" src="oldTbaleTrans.js"></script>
+    <script type="text/javascript" src="oldBtnTrans.js"></script>
+    <script type="text/javascript" src="dialogTrans.js"></script>
     <style>
         #left{
             float: left;
@@ -16,10 +18,18 @@
         }
         #right{
             float: right;
-            width: 50%;
+            width: 45%;
             height: 800px;
             margin-left: -100%;
             /*background-color: black;*/
+        }
+        #center{
+            margin-left: 48%;
+            align-items: center;
+            width: 8%;
+            height: 800px;
+            /*background-color: gray;*/
+            margin-right: -100%;
         }
         #oldForm{
 
@@ -32,32 +42,138 @@
 <body>
 <div id="left">
     <label>
-        <textarea id="oldForm" cols="120" rows="25" placeholder="请输入老表单代码"></textarea>
-        <textarea id="oldTable" cols="120" rows="25" placeholder="请输入老表格代码"></textarea>
+        <textarea id="oldForm" cols="120" rows="15" placeholder="请输入老表单代码"></textarea>
+        <textarea id="oldTable" cols="120" rows="15" placeholder="请输入老表格代码"></textarea>
+        <textarea id="oldBtn" cols="120" rows="15" placeholder="请输入老按钮代码"></textarea>
+        <input id="dialogC" placeholder="对话框中文名称">
+        <input id="dialogE" placeholder="对话框英文名称">
     </label>
 </div>
-
 
 <div id="right">
     <label>
-        <textarea id="newForm" cols="125" rows="50" placeholder="请点击转换按钮进行转换"></textarea>
+        <textarea id="newForm" cols="115" rows="50" placeholder="请点击转换按钮进行转换"></textarea>
     </label>
-    <button onclick="startFormTrans()">转换表单代码</button>
-    <button onclick="startTableTrans()">转换表格代码</button>
-    <button onclick="startExtractData()">提取data</button>
-    <button onclick="startExtractMethods()">提取methods</button>
-    <button onclick="resetTrans()">重置</button>
+</div>
+
+<div id="center">
+    <button onclick="startFormTrans()">转换单表单代码</button><br><br>
+    <button onclick="startFormTrans1()">转换表单1代码</button><br><br>
+    <button onclick="startFormTrans2()">转换表单2代码</button><br><br>
+
+    <button onclick="startTableTrans()">转换表格代码</button><br><br>
+    <button onclick="startTableTrans1()">转换表格1代码</button><br><br>
+    <button onclick="startTableTrans2()">转换表格2代码</button><br><br>
+
+    <button onclick="startBtnTrans()">转换按钮代码</button><br><br>
+
+    <button onclick="startExtractData()">单页面data</button><br><br>
+    <button onclick="startExtractData2()">双页面data</button><br><br>
+
+    <button onclick="startExtractBtnMethods()">提取按钮methods</button><br><br>
+    <!--<button onclick="startExtractMethods()">提取公用methods</button>-->
+    <button onclick="startExtractAllMethods()">单页提取methods</button><br><br>
+    <button onclick="startExtractAllMethods2()">双页提取methods</button><br><br>
+    <button onclick="commenDiv()">通用DIV+其他</button><br><br>
+    <button onclick="dialogCreate()">生成Dialog</button><br><br>
+    <button onclick="resetTrans()">重置</button><br><br>
+    <button onclick="backEnd()">后端生成</button><br>
 </div>
 
 
-
 <script type="text/javascript">
+    //后端生成
+    function backEnd(){
+        window.location.href="backEnd.html"
+    }
+    //对话框生成
+    function dialogCreate(){
+        var inputNameChinese = $("#dialogC").val();
+        var inputNameEnglish = $("#dialogE").val();
+        let allDialog = dialogTrans(inputNameChinese,inputNameEnglish);
+        //输出
+        $("#newForm").val(allDialog);
+    }
+    //通用Div1+Div2
+    function commenDiv(){
+        var commenDiv = '<div class="main-page">\n' +
+            '    <sg-card class="pageForm">\n' +
+            '        <!--表单-->\n' +
+            '      \n' +
+            '    </sg-card>\n' +
+            '    <sg-card class="pagetable">\n' +
+            '      <sg-item-title :title="titleTab"></sg-item-title>\n' +
+            '      <!--表格+分页-->\n' +
+            '     \n' +
+            '      <!--按钮-->\n'+
+            '      <div class="table-btn">\n' +
+            '        <sg-button type="primary" @click="btnSSS()" size="small">btn1</sg-button>\n' +
+            '        <sg-button type="primary" @click="btnSSS()" size="small">btn2</sg-button>\n' +
+            '      </div>\n' +
+            '    <!--对话框-->\n'+
+            ' \n'+
+            '    </sg-card>\n' +
+            '  </div>'+'\n\n\n\n'
+            var other = '//判断是否选中了数据\n'+
+                'if(this.multipleSelection.length==0) {\n' +
+                '        this.$message(\'当前没有可操作业务数据！\');\n' +
+                '        return false;\n' +
+                '      }'
+        var  commenDiv2 = '<div class="main-page">\n' +
+            '    <sg-tabs v-model="activeName" type="border-card" :tab-click="this._resizeHeightTab_(\'tableHeight\')">\n' +
+            '      <sg-tab-pane label="XXXX" name="XXXXX">\n' +
+            '        <sg-card class="pageForm">\n' +
+            '        <!-- 表单-->\n' +
+            '        </sg-card>\n' +
+            '        <sg-card class="pagetable">\n' +
+            '          <sg-item-title :title="titleTab1"></sg-item-title>\n' +
+            '          <!--表格+分页-->\n' +
+            '\n' +
+            '          <!--按钮-->\n' +
+            '          <div class="table-btn">\n' +
+            '            <sg-button type="primary" @click="btnSSS()" size="small">btn1</sg-button>\n' +
+            '            <sg-button type="primary" @click="btnSSS()" size="small">btn2</sg-button>\n' +
+            '          </div>\n' +
+            '        </sg-card>\n' +
+            '      </sg-tab-pane>\n' +
+            '      <sg-tab-pane label="XXXX" name="XXXX">\n' +
+            '        <sg-card class="pageForm">\n' +
+            '\n' +
+            '        </sg-card>\n' +
+            '        <sg-card class="pagetable">\n' +
+            '          <sg-item-title :title="titleTab2"></sg-item-title>\n' +
+            '\n' +
+            '        </sg-card>\n' +
+            '      </sg-tab-pane>\n' +
+            '    </sg-tabs>\n' +
+            '  </div>'+'\n\n\n\n'
+        commenDiv = commenDiv+commenDiv2+other
+        $("#newForm").val(commenDiv);
+    }
     //表单转换
     function startFormTrans(){
         //老表单
         let oldFormVal = $("#oldForm").val();
         //新表单
         let newFormVal = oldFormTrans(oldFormVal);
+        //输出
+        $("#newForm").val(newFormVal);
+    }
+    //表单1转换
+    function startFormTrans1(){
+        //老表单
+        let oldFormVal = $("#oldForm").val();
+        //新表单
+        let newFormVal = oldFormTrans1(oldFormVal);
+        //输出
+        $("#newForm").val(newFormVal);
+    }
+    //表单2转换
+    function startFormTrans2(){
+        //老表单
+        let oldFormVal = $("#oldForm").val();
+        //新表单
+        let newFormVal = oldFormTrans2(oldFormVal);
         //输出
         $("#newForm").val(newFormVal);
     }
@@ -70,18 +186,107 @@
         //输出
         $("#newForm").val(newTableVal);
     }
-    //提取data
+    //表格1转换
+    function startTableTrans1(){
+        //老表格
+        let oldTableVal = $("#oldTable").val();
+        //新表格
+        let newTableVal = oldTableTrans1(oldTableVal);
+        //输出
+        $("#newForm").val(newTableVal);
+    }
+    //表格2转换
+    function startTableTrans2(){
+        //老表格
+        let oldTableVal = $("#oldTable").val();
+        //新表格
+        let newTableVal = oldTableTrans2(oldTableVal);
+        //输出
+        $("#newForm").val(newTableVal);
+    }
+
+    //按钮转换
+    function startBtnTrans(){
+        //老按钮
+        let oldBtnVal = $("#oldBtn").val();
+        //新按钮
+        let newBtnVal = oldBtnTrans(oldBtnVal);
+        //输出
+        $("#newForm").val(newBtnVal);
+    }
+    //提取data1
     function startExtractData(){
         //老表单
         let oldFormVal = $("#oldForm").val();
         //新data
         let newData = oldFormDataExtract(oldFormVal);
+        //dialog的data
+        var inputNameChinese = $("#dialogC").val();
+        var inputNameEnglish = $("#dialogE").val();
+        let dialogData = dialogTransUseData(inputNameChinese,inputNameEnglish);
+        //data结束
+        var endData = '\n}\n}'
+        newData = newData+dialogData+endData
         $("#newForm").val(newData);
     }
-    //提取Methods
+    //提取data2
+    function startExtractData2(){
+        //老表单
+        let oldFormVal = $("#oldForm").val();
+        //新data
+        let newData = oldFormDataExtract2(oldFormVal);
+        //dialog的data
+        var inputNameChinese = $("#dialogC").val();
+        var inputNameEnglish = $("#dialogE").val();
+        let dialogData = dialogTransUseData(inputNameChinese,inputNameEnglish);
+        //data结束
+        var endData = '\n}\n}'
+        newData = newData+dialogData+endData
+        $("#newForm").val(newData);
+    }
+    //提取公用Methods
     function startExtractMethods(){
         //新methods
         let newMethods = oldFormMethodsExtract();
+        //输出
+        $("#newForm").val(newMethods);
+    }
+    //提取按钮Methods
+    function startExtractBtnMethods(){
+        //老按钮
+        let oldBtnVal = $("#oldBtn").val();
+        //新按钮方法
+        let newBtnMethods = oldBtnMethodsTrans(oldBtnVal);
+        //输出
+        $("#newForm").val(newBtnMethods);
+    }
+    //单页提取全部Methods
+    function startExtractAllMethods(){
+        //新methods
+        let newMethods = oldFormMethodsExtract();
+        var endMethod = '\n'+'}'
+        //老按钮
+        let oldBtnVal = $("#oldBtn").val();
+        //新按钮方法
+        let newBtnMethods = oldBtnMethodsTrans(oldBtnVal)+'\n';
+
+        newMethods  = newMethods +'\n'+newBtnMethods+endMethod
+
+        //输出
+        $("#newForm").val(newMethods);
+    }
+    //双页提取全部Methods
+    function startExtractAllMethods2(){
+        //新methods
+        let newMethods = oldFormMethodsExtract2();
+        var endMethod = '\n'+'}'
+        //老按钮
+        let oldBtnVal = $("#oldBtn").val();
+        //新按钮方法
+        let newBtnMethods = oldBtnMethodsTrans(oldBtnVal)+'\n';
+
+        newMethods  = newMethods +'\n'+newBtnMethods+endMethod
+
         //输出
         $("#newForm").val(newMethods);
     }

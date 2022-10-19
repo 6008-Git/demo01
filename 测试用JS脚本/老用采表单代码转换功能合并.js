@@ -1,13 +1,69 @@
 //表单格式及内容转换
-var oldForm = '<dw:treeSelect name="orgNo" rootID="root" labelValue="供电单位"\n' +
-    '\t\t\t\t\trequired="false" dsSource="orgNoVds" isDynamic="true"\n' +
-    '\t\t\t\t\thasDefaultValue="true">\n' +
-    '\t\t\t\t</dw:treeSelect>\n' +
-    '\t\t\t\t<dw:dropdown name="tmnlType" labelValue="终端类型"\n' +
-    '\t\t\t\t\tcode="TERMINALTYPECODE"></dw:dropdown>\n' +
-    '\t\t\t\t<dw:textInputWithLabel dataType="Date" name="dataDate"\n' +
-    '\t\t\t\t\tlabelValue="日期" value="<%=dataDate %>" required="true">\n' +
-    '\t\t\t\t</dw:textInputWithLabel>'
+var oldForm = '<dw:treeSelect name="orgNo" rootID="root" labelValue="单位名称" required="true"  dsSource="orgNoVds" isDynamic="true" hasDefaultValue="true" ></dw:treeSelect>\n' +
+    '\t\t<dw:dropdown name="checkobjtype" labelValue="对时对象类型" required="true" defaultSelect="<%=checkObjType %>"\n' +
+    '\t\t\t\tcode="CHECKOBJTYPE"></dw:dropdown>\n' +
+    '\t\t<dw:dropdown name="handlingType" labelValue="处理方式" defaultSelect="<%=handlingType%>"\n' +
+    '\t\t\t\tcode="HANDLETYPECODE" required="true"></dw:dropdown>\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="对时工作单编号" required="false" hidden="true" value="<%=chkno%>"\n' +
+    '\t\t\tname="chkno" >\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:nextLine />\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="电能表编号"\n' +
+    '\t\t\tname="meterId"  value="<%=meterId%>" >\n' +
+    '\t\t\t<dw:lovWindow name="lovMeter" actionUrl="lov.do?method=queryRunMeter"\n' +
+    '\t\t\t\tlabelValue="查询运行电能表">\n' +
+    '\t\t\t</dw:lovWindow>\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="SG186电能表编号"\n' +
+    '\t\t\tname="meterIdMis" value="<%=meterIdMis%>"  readonly="true">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:textInputWithLabel dataType="Number" labelValue="对时前时钟偏差（秒）" required="true" value="<%=timeDeviation%>"\n' +
+    '\t\t\tname="timeDeviation" mask="#####">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:nextLine />\n' +
+    '\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="终端编号"\n' +
+    '\t\t\tname="terminalId" value="<%=terminalId%>"  >\n' +
+    '\t\t\t<dw:lovWindow name="lovSubsOrg"\n' +
+    '\t\t\t\tactionUrl="lov.do?method=queryTerminal" labelValue="查询终端">\n' +
+    '\t\t\t</dw:lovWindow>\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="终端名称"\n' +
+    '\t\t\tname="terminalName"  value="<%=terminalName%>" readonly="true">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:textInputWithLabel dataType="Date" labelValue="处理日期"\n' +
+    '\t\t\tname="handlDate" required="true" value="<%=handlDate%>">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:textInputWithLabel dataType="Date" labelValue="登记日期" hidden="true"\n' +
+    '\t\t\tname="registDate" readonly="true" value="<%=registDate%>">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:nextLine />\n' +
+    '\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="处理人员ID"\n' +
+    '\t\t\tname="handleId" value="<%=handleId%>" readonly="true" hidden="true">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="处理人员名称"\n' +
+    '\t\t\tname="handleName" readonly="true" value="<%=handleName%>" hidden="true">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:nextLine />\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="电能表安装位置" value="<%=instLoc%>"\n' +
+    '\t\t\tname="instLoc" maxLength="256" colspan="6">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:nextLine />\n' +
+    '\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="终端安装位置"\n' +
+    '\t\t\tname="terminalLoc" value="<%=terminalLoc%>" maxLength="256" colspan="6">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:nextLine />\n' +
+    '\t\t<dw:textInputWithLabel dataType="String" labelValue="处理备注"\n' +
+    '\t\t\tname="chkRemark" value="<%=chkRemark%>" maxLength="256" colspan="6">\n' +
+    '\t\t</dw:textInputWithLabel>\n' +
+    '\t\t<dw:nextLine />\n' +
+    '\n' +
+    '\t\t<dw:buttons border="false" name="btns" colspan="9"\n' +
+    '\t\t\tresponseSign="response">\n' +
+    '\t\t\t<dw:button name="btnSave" value="保  存" onclick="SaveSiteSurvey()" width="5"></dw:button>\n' +
+    '\t\t</dw:buttons>'
 //存放整个表单
 var allForm = ''
 var formStart = '<sg-form ref="formXXXRef"\n' +
@@ -79,7 +135,7 @@ for (let i = 0; i < oldForm_Arr.length; i++) {
         return item && item.trim();
     })
     //oldForm_split就是单个数据标签，输出多个是因为在循环里面
-    //console.log(oldForm_split)
+    console.log(oldForm_split)
 
     //判断树型表单
     if(oldForm_split[0]==='<dw:treeSelect'){
@@ -233,12 +289,13 @@ for (let i = 0; i < oldForm_Arr.length; i++) {
             //console.log(allLine)
         }
     }
+
 }
 
 //console.log(modelArr)
 allForm = formStart+formContent+formEnd
-console.log(formContent)
-console.log(allForm)
+//console.log(formContent)
+//console.log(allForm)
 
 var model1 = 'formXXXModel:{'+'\n'
 var model2 = ''
