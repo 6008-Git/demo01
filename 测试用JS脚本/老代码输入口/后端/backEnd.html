@@ -6,6 +6,7 @@
     <script type="text/javascript" src="jquery.min.js"></script>
     <script type="text/javascript" src="downloadFile.js"></script>
     <script type="text/javascript" src="backEndContent.js"></script>
+    <script type="text/javascript" src="paramConversion.js"></script>
     <style>
         #left{
             float: left;
@@ -44,8 +45,10 @@
     <label for="searchControllerReflect">查询映射路径名称</label><input id="searchControllerReflect"><br><br>
     <label for="AllcommentChinese">总中文注释</label><input id="AllcommentChinese"><br><br>
     <label for="MethodscommentChinese">方法中文注释</label><input id="MethodscommentChinese"><br><br>
+    <label for="oldParam"></label>老参数获取代码<textarea id="oldParam" style="width: 500px;height: 300px"></textarea><br><br>
     <button onclick="createFile()">点击生成文件</button>
     <button onclick="createBackCode()">点击生成后端代码</button>
+    <button onclick="paramConversion()">获取前端参数转换</button>
 </div>
 <div id="right">
     <label>
@@ -54,6 +57,12 @@
 </div>
 
 <script type="text/javascript">
+    //参数转换
+    function paramConversion(){
+        var oldParam = $('#oldParam').val();
+        let newParam = oldParamTrans(oldParam);
+        $('#newForm').val(newParam);
+    }
     function createFile(){
         let fileName = $("#fileName").val();
         let allControllerReflect = $("#allControllerReflect").val();
@@ -78,7 +87,7 @@
         let MethodscommentChinese = $("#MethodscommentChinese").val();
         $('#newForm').val(
             controllerContent(fileName,allControllerReflect,searchControllerReflect,
-            AllcommentChinese,MethodscommentChinese)+'\n'+
+                AllcommentChinese,MethodscommentChinese)+'\n'+
             serviceContent(fileName,allControllerReflect,searchControllerReflect,
                 AllcommentChinese,MethodscommentChinese)+'\n'+
             serviceImplContent(fileName,allControllerReflect,searchControllerReflect,

@@ -61,7 +61,9 @@
     <button onclick="startFormTrans1()">转换表单1代码</button><br><br>
     <button onclick="startFormTrans2()">转换表单2代码</button><br><br>
 
-    <button onclick="startTableTrans()">转换表格代码</button><br><br>
+    <button onclick="startTableTrans()">转换表格代码<br/>
+        +参数<br/></button><br><br>
+    <button onclick="startTableTransMethods()">提取表格内方法</button><br><br>
     <button onclick="startTableTrans1()">转换表格1代码</button><br><br>
     <button onclick="startTableTrans2()">转换表格2代码</button><br><br>
 
@@ -183,6 +185,14 @@
         let oldTableVal = $("#oldTable").val();
         //新表格
         let newTableVal = oldTableTrans(oldTableVal);
+        //输出
+        $("#newForm").val(newTableVal);
+    }
+    function startTableTransMethods(){
+        //老表格
+        let oldTableVal = $("#oldTable").val();
+        //新表格
+        let newTableVal = oldTableTransMethods(oldTableVal);
         //输出
         $("#newForm").val(newTableVal);
     }
