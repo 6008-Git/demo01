@@ -37,13 +37,17 @@ function oldParamTrans(oldParamCode){
         var oldParamCodeArrOne = oldParamCodeArr[i];
         //再以空格分割
         oldParamCodeArrOne=oldParamCodeArrOne.split(' ')
-        //console.log(oldParamCodeArrOne)
+        //数组去空
+        oldParamCodeArrOne=oldParamCodeArrOne.filter((item)=>{
+            return item && item.trim();
+        })
+        console.log(oldParamCodeArrOne)
         //拿到变量名称
 
         nameArr.push(oldParamCodeArrOne[1])
     }
 
-    console.log(nameArr)
+    //console.log(nameArr)
 
     var newCodeParam = ''
     for (let i = 0; i < nameArr.length; i++) {

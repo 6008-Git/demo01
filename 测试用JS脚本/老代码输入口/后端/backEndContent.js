@@ -35,6 +35,7 @@ function controllerContent(fileName,allControllerReflect,searchControllerReflect
 function serviceContent(fileName,allControllerReflect,searchControllerReflect,
                         AllcommentChinese,MethodscommentChinese){
     var service = 'import com.alibaba.fastjson.JSONObject;\n' +
+        'import com.dareway.serviceDwdsmDeviceAccess.service.base.BaseService;\n'+
         '\n' +
         'import java.util.List;\n' +
         'import java.util.Map;'+'\n\n\n\n\n'+
@@ -54,6 +55,9 @@ function serviceImplContent(fileName,allControllerReflect,searchControllerReflec
         'import org.springframework.jdbc.core.JdbcTemplate;\n' +
         'import org.springframework.stereotype.Service;\n' +
         '\n' +
+        'import java.util.Date;\n' +
+        'import com.dareway.serviceDwdsmDeviceAccess.utils.PubTool;\n' +
+        'import com.alibaba.druid.util.StringUtils;\n'+
         'import java.util.List;\n' +
         'import java.util.Map;'+'\n\n\n\n\n\n'+
         '@Service\n' +
@@ -66,7 +70,15 @@ function serviceImplContent(fileName,allControllerReflect,searchControllerReflec
         '    //'+MethodscommentChinese+'\n' +
         '    @Override\n' +
         '    public List<Map<String, Object>> '+searchControllerReflect+'(JSONObject param) throws Exception{\n' +
-        '        return null;\n' +
+        '        //获取前端参数'+
+        '\n\n'+
+        '        //SQL编写\n' +
+        '        StringBuffer sb = new StringBuffer();\n'+
+        '        List<Object> conditionList= new LinkedList<>();'+
+        '\n\n'+
+        '        //执行sql，返回list集合    ---queryForList（sql,参数）\n' +
+        '        List<Map<String, Object>>  list=  jdbcTemplate.queryForList(sb.toString(),conditionList.toArray());\n' +
+        '        return list;' +
         '    }\n' +
         '\n' +
         '}\n'

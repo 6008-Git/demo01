@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>js 对象key值大小写转换</title>
+</head>
+<body>
+<script>
+    // 大写转换
+    function upperJSONKey(jsonObj){
+        for (var key in jsonObj){
+            jsonObj["\""+key.toUpperCase()+"\""] = jsonObj[key];
+            delete(jsonObj[key]);
+        }
+        return jsonObj;
+    }
+
+    // 小写转换
+    function lowerJSONKey(jsonObj){
+        for (var key in jsonObj){
+            jsonObj["\""+key.toLowerCase()+"\""] = jsonObj[key];
+            delete(jsonObj[key]);
+        }
+        return jsonObj;
+    }
+
+    var obj = {KEY:'value'};
+    var newObj = lowerJSONKey(obj);
+    console.log(newObj);
+</script>
+</body>
+</html>
