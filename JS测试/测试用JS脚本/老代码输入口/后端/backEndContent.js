@@ -78,7 +78,7 @@ function serviceImplContent(fileName,allControllerReflect,searchControllerReflec
         '\n\n'+
         '        //执行sql，返回list集合    ---queryForList（sql,参数）\n' +
         '        List<Map<String, Object>>  list=  jdbcTemplate.queryForList(sb.toString(),conditionList.toArray());\n' +
-        '        return list;' +
+        '        return list;\n' +
         '    }\n' +
         '\n' +
         '}\n'

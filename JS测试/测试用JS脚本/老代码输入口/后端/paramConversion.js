@@ -20,6 +20,10 @@ function oldParamTrans(oldParamCode){
     oldParamCode = oldParamCode.replace(/\n/g,'')
 //console.log(oldParamCode)
 
+//将=两边加上空格
+    oldParamCode = oldParamCode.replace(/=/g,' = ')
+
+
 //以;分割，得到单行数组
     oldParamCodeArr= oldParamCode.split(';')
 //console.log(oldParamCodeArr)

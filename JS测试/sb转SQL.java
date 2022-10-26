@@ -1,3 +1,5 @@
+package JS测试;
+
 public class sb转SQL {
     public static void main(String[] args) {
         StringBuffer sql = new StringBuffer();

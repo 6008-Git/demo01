@@ -6,7 +6,7 @@
       </sourceFilesUrls>
     </properties>
     <CLASSES>
-      <root url="file://$PROJECT_DIR$/监控设备级联下拉框测试/_element-ui@2.15.10@element-ui" />
+      <root url="file://$PROJECT_DIR$/JS测试/监控设备级联下拉框测试/_element-ui@2.15.10@element-ui" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
